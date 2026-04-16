@@ -18,10 +18,10 @@ function App() {
       <div className="app-container">
         {/* Mobile Header */}
         <header className="mobile-header">
-          <h2>PEROS FEEDS</h2>
           <button className="menu-toggle" onClick={toggleSidebar}>
             {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
+          <h2>PEROS FEEDS</h2>
         </header>
 
         {/* Sidebar Overlay */}
