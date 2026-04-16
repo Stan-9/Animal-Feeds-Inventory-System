@@ -35,63 +35,65 @@ const Customers = () => {
     };
 
     return (
-        <div>
-            <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <div>
-                    <h1 style={{ fontSize: '1.875rem', fontWeight: '700' }}>Creditors & Debts</h1>
-                    <p style={{ color: 'var(--text-muted)' }}>Manage customer accounts and credit balances</p>
+        <div className="page-container">
+            <header className="page-header">
+                <div className="header-text">
+                    <h1>Creditors & Debts</h1>
+                    <p>Manage customer accounts and credit balances</p>
                 </div>
-                <button className="btn btn-primary" onClick={() => setShowRegister(true)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <button className="btn btn-primary" onClick={() => setShowRegister(true)}>
                     <UserPlus size={18} /> Register Customer
                 </button>
             </header>
 
             <div className="card">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Customer Name</th>
-                            <th>Phone</th>
-                            <th>Outstanding Balance</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {customers.map(c => (
-                            <tr key={c.id}>
-                                <td style={{ fontWeight: '600' }}>{c.name}</td>
-                                <td>{c.phone}</td>
-                                <td style={{ fontWeight: '700', color: c.balance > 0 ? 'var(--danger)' : 'var(--accent)' }}>
-                                    KES {c.balance.toLocaleString()}
-                                </td>
-                                <td>
-                                    {c.balance > 0 ? (
-                                        <span style={{ color: 'var(--danger)', fontSize: '0.8rem', background: '#fef2f2', padding: '4px 8px', borderRadius: '12px' }}>
-                                            Active Debt
-                                        </span>
-                                    ) : (
-                                        <span style={{ color: 'var(--accent)', fontSize: '0.8rem', background: '#ecfdf5', padding: '4px 8px', borderRadius: '12px' }}>
-                                            Clear
-                                        </span>
-                                    )}
-                                </td>
-                                <td>
-                                    {c.balance > 0 && (
-                                        <button className="btn" onClick={() => setShowRepay(c)} style={{ padding: '4px 8px', fontSize: '0.75rem', background: '#f1f5f9' }}>
-                                            <Wallet size={14} /> Record Payment
-                                        </button>
-                                    )}
-                                </td>
+                <div className="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer Name</th>
+                                <th>Phone</th>
+                                <th>Outstanding Balance</th>
+                                <th>Status</th>
+                                <th>Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {customers.map(c => (
+                                <tr key={c.id}>
+                                    <td style={{ fontWeight: '600' }}>{c.name}</td>
+                                    <td>{c.phone}</td>
+                                    <td style={{ fontWeight: '700', color: c.balance > 0 ? 'var(--danger)' : 'var(--accent)' }}>
+                                        KES {c.balance.toLocaleString()}
+                                    </td>
+                                    <td>
+                                        {c.balance > 0 ? (
+                                            <span style={{ color: 'var(--danger)', fontSize: '0.8rem', background: '#fef2f2', padding: '4px 12px', borderRadius: '12px', fontWeight: '600' }}>
+                                                Active Debt
+                                            </span>
+                                        ) : (
+                                            <span style={{ color: 'var(--accent)', fontSize: '0.8rem', background: '#ecfdf5', padding: '4px 12px', borderRadius: '12px', fontWeight: '600' }}>
+                                                Clear
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td>
+                                        {c.balance > 0 && (
+                                            <button className="btn" onClick={() => setShowRepay(c)} style={{ padding: '4px 8px', fontSize: '0.75rem', background: '#f1f5f9' }}>
+                                                <Wallet size={14} /> Record Payment
+                                            </button>
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             {showRegister && (
                 <div className="modal-overlay" style={overlayStyle}>
-                    <div className="card" style={{ width: '400px' }}>
+                    <div className="card modal-card">
                         <h2>Register New Customer</h2>
                         <form onSubmit={handleRegister} style={{ marginTop: '1rem' }}>
                             <label>Full Name</label>
@@ -100,7 +102,7 @@ const Customers = () => {
                             <label>Phone Number</label>
                             <input required onChange={e => setFormData({ ...formData, phone: e.target.value })} />
                             
-                            <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.5rem' }}>
+                            <div className="modal-actions">
                                 <button type="submit" className="btn btn-primary">Save Customer</button>
                                 <button type="button" className="btn" onClick={() => setShowRegister(false)}>Cancel</button>
                             </div>
@@ -111,14 +113,14 @@ const Customers = () => {
 
             {showRepay && (
                 <div className="modal-overlay" style={overlayStyle}>
-                    <div className="card" style={{ width: '400px' }}>
+                    <div className="card modal-card">
                         <h2>Repayment: {showRepay.name}</h2>
                         <p style={{ color: 'var(--danger)', fontWeight: '600' }}>Current Balance: KES {showRepay.balance}</p>
                         <form onSubmit={handleRepayment} style={{ marginTop: '1rem' }}>
                             <label>Payment Amount</label>
                             <input type="number" step="0.01" required onChange={e => setRepayAmount(e.target.value)} />
                             
-                            <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.5rem' }}>
+                            <div className="modal-actions">
                                 <button type="submit" className="btn btn-primary">Submit Payment</button>
                                 <button type="button" className="btn" onClick={() => setShowRepay(null)}>Cancel</button>
                             </div>
@@ -132,7 +134,7 @@ const Customers = () => {
 
 const overlayStyle = {
     position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-    background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+    background: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1002, padding: '1rem'
 };
 
 export default Customers;

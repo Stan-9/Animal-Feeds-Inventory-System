@@ -56,11 +56,14 @@ const POS = () => {
     };
 
     return (
-        <div style={{ display: 'flex', gap: '2rem' }}>
+        <div className="pos-container" style={{ display: 'flex', gap: '2rem' }}>
             <div style={{ flex: 1 }}>
-                <header style={{ marginBottom: '1.5rem' }}>
-                    <h1 style={{ fontSize: '1.5rem', fontWeight: '700' }}>Sales Terminal</h1>
-                    <div style={{ position: 'relative', marginTop: '1rem' }}>
+                <header className="page-header">
+                    <div className="header-text">
+                        <h1>Sales Terminal</h1>
+                        <p>Generate sales and scan items</p>
+                    </div>
+                    <div style={{ position: 'relative', flex: 1, maxWidth: '400px' }}>
                         <Search style={{ position: 'absolute', left: '12px', top: '12px', color: 'var(--text-muted)' }} size={20} />
                         <input 
                             placeholder="Scan or search products..." 
@@ -70,9 +73,9 @@ const POS = () => {
                     </div>
                 </header>
 
-                <div className="grid grid-cols-2" style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto' }}>
+                <div className="grid grid-cols-2" style={{ maxHeight: 'calc(100vh - 200px)', overflowY: 'auto', padding: '4px' }}>
                     {filteredProducts.map(p => (
-                        <div key={p.id} className="card" style={{ cursor: 'pointer', border: p.quantity === 0 ? '1px dashed var(--danger)' : 'none' }} onClick={() => p.quantity > 0 && addToCart(p)}>
+                        <div key={p.id} className="card" style={{ cursor: 'pointer', border: p.quantity === 0 ? '1px dashed var(--danger)' : 'none', marginBottom: '0' }} onClick={() => p.quantity > 0 && addToCart(p)}>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <div>
                                     <h4 style={{ fontSize: '1rem' }}>{p.name}</h4>
@@ -85,8 +88,8 @@ const POS = () => {
                 </div>
             </div>
 
-            <div className="pos-cart" style={{ width: '400px' }}>
-                <div className="card" style={{ height: 'calc(100vh - 100px)', display: 'flex', flexDirection: 'column' }}>
+            <div className="pos-cart">
+                <div className="card" style={{ height: 'calc(100vh - 120px)', minHeight: '500px', display: 'flex', flexDirection: 'column', position: 'sticky', top: '5rem' }}>
                     <h3 style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                         <ShoppingCart size={20} /> Checkout Balance
                     </h3>
@@ -145,7 +148,7 @@ const POS = () => {
                         )}
 
                         <button className="btn btn-primary" style={{ width: '100%', marginTop: '1rem', padding: '1rem' }} onClick={handleCheckout}>
-                            Confirm Sale & Generate Receipt
+                            Confirm Sale
                         </button>
                     </div>
                 </div>
@@ -153,7 +156,7 @@ const POS = () => {
 
             {receipt && (
                 <div className="modal-overlay" style={overlayStyle}>
-                    <div className="card" style={{ width: '350px', padding: '2rem', textAlign: 'center' }}>
+                    <div className="card modal-card" style={{ padding: '2rem', textAlign: 'center' }}>
                         <h2 style={{ color: 'var(--primary)' }}>Peros Animal Feeds</h2>
                         <p style={{ fontSize: '0.8rem', marginBottom: '1rem' }}>Receipt ID: #{receipt.saleId}</p>
                         <div style={{ textAlign: 'left', borderTop: '1px dashed #ccc', borderBottom: '1px dashed #ccc', padding: '1rem 0' }}>
@@ -169,10 +172,12 @@ const POS = () => {
                             <p style={{ fontSize: '0.8rem' }}>Method: {paymentMethod}</p>
                             {receipt.balanceDue > 0 && <p style={{ color: 'var(--danger)', fontSize: '0.85rem' }}>Balance Due: KES {receipt.balanceDue}</p>}
                         </div>
-                        <button className="btn btn-primary" style={{ marginTop: '1.5rem', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }} onClick={() => window.print()}>
-                           <Printer size={18} /> Print Receipt
-                        </button>
-                        <button className="btn" style={{ marginTop: '0.5rem', width: '100%' }} onClick={() => setReceipt(null)}>CLOSE</button>
+                        <div className="modal-actions" style={{ flexDirection: 'column', gap: '0.5rem' }}>
+                            <button className="btn btn-primary" onClick={() => window.print()}>
+                               <Printer size={18} /> Print Receipt
+                            </button>
+                            <button className="btn" onClick={() => setReceipt(null)}>CLOSE</button>
+                        </div>
                     </div>
                 </div>
             )}
@@ -182,7 +187,7 @@ const POS = () => {
 
 const overlayStyle = {
     position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
-    background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000
+    background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1002, padding: '1rem'
 };
 
 export default POS;

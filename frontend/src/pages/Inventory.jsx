@@ -34,55 +34,57 @@ const Inventory = () => {
     };
 
     return (
-        <div>
-            <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <div>
-                    <h1 style={{ fontSize: '1.875rem', fontWeight: '700' }}>Inventory Management</h1>
-                    <p style={{ color: 'var(--text-muted)' }}>Track and manage your animal feeds stock</p>
+        <div className="page-container">
+            <header className="page-header">
+                <div className="header-text">
+                    <h1>Inventory Management</h1>
+                    <p>Track and manage your animal feeds stock</p>
                 </div>
-                <button className="btn btn-primary" onClick={() => setShowAdd(true)} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <button className="btn btn-primary" onClick={() => setShowAdd(true)}>
                     <Plus size={18} /> Add Product
                 </button>
             </header>
 
             <div className="card">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Product Name</th>
-                            <th>Category</th>
-                            <th>Stock</th>
-                            <th>Avg Cost</th>
-                            <th>Selling Price</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.map(p => (
-                            <tr key={p.id}>
-                                <td>#{p.id}</td>
-                                <td style={{ fontWeight: '600' }}>{p.name}</td>
-                                <td>{p.category}</td>
-                                <td style={{ color: p.quantity <= p.low_threshold ? 'var(--danger)' : 'inherit' }}>
-                                    {p.quantity} {p.quantity <= p.low_threshold && "(Low)"}
-                                </td>
-                                <td>KES {p.avg_buying_price.toFixed(2)}</td>
-                                <td style={{ fontWeight: '600', color: 'var(--accent)' }}>KES {p.selling_price.toLocaleString()}</td>
-                                <td>
-                                    <button className="btn" onClick={() => setShowRestock(p.id)} style={{ padding: '4px 8px', fontSize: '0.75rem', background: '#f1f5f9' }}>
-                                        <RefreshCw size={14} /> Restock
-                                    </button>
-                                </td>
+                <div className="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Stock</th>
+                                <th>Avg Cost</th>
+                                <th>Selling Price</th>
+                                <th>Actions</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {products.map(p => (
+                                <tr key={p.id}>
+                                    <td>#{p.id}</td>
+                                    <td style={{ fontWeight: '600' }}>{p.name}</td>
+                                    <td>{p.category}</td>
+                                    <td style={{ color: p.quantity <= p.low_threshold ? 'var(--danger)' : 'inherit' }}>
+                                        {p.quantity} {p.quantity <= p.low_threshold && "(Low)"}
+                                    </td>
+                                    <td>KES {p.avg_buying_price.toFixed(2)}</td>
+                                    <td style={{ fontWeight: '600', color: 'var(--accent)' }}>KES {p.selling_price.toLocaleString()}</td>
+                                    <td>
+                                        <button className="btn" onClick={() => setShowRestock(p.id)} style={{ padding: '4px 8px', fontSize: '0.75rem', background: '#f1f5f9' }}>
+                                            <RefreshCw size={14} /> Restock
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             {showAdd && (
                 <div className="modal-overlay" style={overlayStyle}>
-                    <div className="card" style={{ width: '400px' }}>
+                    <div className="card modal-card">
                         <h2>New Product</h2>
                         <form onSubmit={handleAddProduct} style={{ marginTop: '1rem' }}>
                             <label>Product Name</label>
@@ -105,7 +107,7 @@ const Inventory = () => {
                             <label>Selling Price</label>
                             <input type="number" step="0.01" required onChange={e => setFormData({ ...formData, selling_price: parseFloat(e.target.value) })} />
                             
-                            <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.5rem' }}>
+                            <div className="modal-actions">
                                 <button type="submit" className="btn btn-primary">Save Product</button>
                                 <button type="button" className="btn" onClick={() => setShowAdd(false)}>Cancel</button>
                             </div>
@@ -116,7 +118,7 @@ const Inventory = () => {
 
             {showRestock && (
                 <div className="modal-overlay" style={overlayStyle}>
-                    <div className="card" style={{ width: '400px' }}>
+                    <div className="card modal-card">
                         <h2>Restock Product #{showRestock}</h2>
                         <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem' }}>Uses Weighted Average Cost Method</p>
                         <form onSubmit={handleRestock} style={{ marginTop: '1rem' }}>
@@ -126,7 +128,7 @@ const Inventory = () => {
                             <label>Purchase Price (per unit)</label>
                             <input type="number" step="0.01" required onChange={e => setRestockData({ ...restockData, new_buying_price: parseFloat(e.target.value) })} />
                             
-                            <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.5rem' }}>
+                            <div className="modal-actions">
                                 <button type="submit" className="btn btn-primary">Update Stock</button>
                                 <button type="button" className="btn" onClick={() => setShowRestock(null)}>Cancel</button>
                             </div>
@@ -145,7 +147,8 @@ const overlayStyle = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 1000
+    zIndex: 1002,
+    padding: '1rem'
 };
 
 export default Inventory;

@@ -48,10 +48,12 @@ const Reports = () => {
     const totalPotentialRevenue = inventory.reduce((sum, p) => sum + (p.quantity * p.selling_price), 0);
 
     return (
-        <div>
-            <header style={{ marginBottom: '2rem' }}>
-                <h1 style={{ fontSize: '1.875rem', fontWeight: '700' }}>Analytics & Financial Reports</h1>
-                <p style={{ color: 'var(--text-muted)' }}>Business performance insights for Peros Animal Feeds</p>
+        <div className="page-container">
+            <header className="page-header">
+                <div className="header-text">
+                    <h1>Analytics & Financial Reports</h1>
+                    <p>Business performance insights for Peros Animal Feeds</p>
+                </div>
             </header>
 
             <div className="grid grid-cols-2">
@@ -87,30 +89,32 @@ const Reports = () => {
 
             <div className="card" style={{ marginTop: '1rem' }}>
                 <h3>Full Inventory Value Report</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th>In Stock</th>
-                            <th>Avg Cost</th>
-                            <th>Total Cost</th>
-                            <th>Potential Profit</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {inventory.map(p => (
-                            <tr key={p.id}>
-                                <td>{p.name}</td>
-                                <td>{p.quantity}</td>
-                                <td>{p.avg_buying_price.toFixed(2)}</td>
-                                <td>{(p.quantity * p.avg_buying_price).toFixed(2)}</td>
-                                <td style={{ color: 'var(--accent)', fontWeight: '600' }}>
-                                    {((p.selling_price - p.avg_buying_price) * p.quantity).toLocaleString()}
-                                </td>
+                <div className="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>In Stock</th>
+                                <th>Avg Cost</th>
+                                <th>Total Cost</th>
+                                <th>Potential Profit</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {inventory.map(p => (
+                                <tr key={p.id}>
+                                    <td>{p.name}</td>
+                                    <td>{p.quantity}</td>
+                                    <td>{p.avg_buying_price.toFixed(2)}</td>
+                                    <td>{(p.quantity * p.avg_buying_price).toFixed(2)}</td>
+                                    <td style={{ color: 'var(--accent)', fontWeight: '600' }}>
+                                        {((p.selling_price - p.avg_buying_price) * p.quantity).toLocaleString()}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );
