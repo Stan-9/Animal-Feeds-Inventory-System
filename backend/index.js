@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 const { db, initDB } = require('./database/index');
 
 const app = express();
@@ -115,7 +115,7 @@ app.post('/api/customers', async (req, res) => {
 // --- SALES (POS) ---
 app.post('/api/sales', async (req, res) => {
     const { cart, payment_method, amount_paid, customer_id } = req.body;
-    const saleId = uuidv4().substring(0, 8).toUpperCase();
+    const saleId = crypto.randomUUID().substring(0, 8).toUpperCase();
     
     const client = await db.connect();
     try {
