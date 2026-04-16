@@ -113,6 +113,20 @@ app.post('/api/customers', async (req, res) => {
 });
 
 // --- SALES (POS) ---
+app.get('/api/sales', async (req, res) => {
+    try {
+        const sales = await getQuery(`
+            SELECT s.*, c.name as customer_name 
+            FROM sales s 
+            LEFT JOIN customers c ON s.customer_id = c.id 
+            ORDER BY s.timestamp DESC
+        `);
+        res.json(sales);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 app.post('/api/sales', async (req, res) => {
     const { cart, payment_method, amount_paid, customer_id } = req.body;
     const saleId = crypto.randomUUID().substring(0, 8).toUpperCase();
