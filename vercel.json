@@ -2,6 +2,11 @@
   "framework": "vite",
   "buildCommand": "npm run vercel-build",
   "outputDirectory": "frontend/dist",
+  "functions": {
+    "backend/index.js": {
+      "runtime": "vercel-node@latest"
+    }
+  },
   "rewrites": [
     {
       "source": "/api/(.*)",
