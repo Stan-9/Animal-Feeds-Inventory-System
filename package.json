@@ -1,0 +1,8 @@
+{
+  "name": "animal-feeds-inventory-root",
+  "version": "1.0.0",
+  "scripts": {
+    "vercel-build": "cd frontend && npm install && npm run build && cd .. && npm run install-backend",
+    "install-backend": "cd backend && npm install"
+  }
+}
