@@ -2,7 +2,15 @@
   "name": "animal-feeds-inventory-root",
   "version": "1.0.0",
   "scripts": {
-    "vercel-build": "cd frontend && npm install && npm run build && cd .. && npm run install-backend",
-    "install-backend": "cd backend && npm install"
+    "vercel-build": "cd frontend && npm install && npm run build"
+  },
+  "dependencies": {
+    "@vercel/postgres": "^0.10.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "pg": "^8.20.0",
+    "sqlite3": "^6.0.1",
+    "uuid": "^13.0.0"
   }
 }
