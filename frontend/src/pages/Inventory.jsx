@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/config';
 import { Plus, PackageSearch, RefreshCw } from 'lucide-react';
 
 const Inventory = () => {
@@ -10,7 +10,7 @@ const Inventory = () => {
     const [restockData, setRestockData] = useState({ added_quantity: 0, new_buying_price: 0 });
 
     const fetchProducts = () => {
-        axios.get('http://localhost:5000/api/products').then(res => setProducts(res.data));
+        api.get('/api/products').then(res => setProducts(res.data));
     };
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const Inventory = () => {
 
     const handleAddProduct = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5000/api/products', formData).then(() => {
+        api.post('/api/products', formData).then(() => {
             setShowAdd(false);
             fetchProducts();
         });
@@ -27,7 +27,7 @@ const Inventory = () => {
 
     const handleRestock = (e) => {
         e.preventDefault();
-        axios.post(`http://localhost:5000/api/products/${showRestock}/restock`, restockData).then(() => {
+        api.post(`/api/products/${showRestock}/restock`, restockData).then(() => {
             setShowRestock(null);
             fetchProducts();
         });

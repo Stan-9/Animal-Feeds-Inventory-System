@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/config';
 import { TrendingUp, AlertTriangle, Users2, DollarSign } from 'lucide-react';
 
 const Dashboard = () => {
@@ -11,7 +11,7 @@ const Dashboard = () => {
     });
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/reports/dashboard')
+        api.get('/api/reports/dashboard')
             .then(res => setData(res.data))
             .catch(err => console.error(err));
     }, []);

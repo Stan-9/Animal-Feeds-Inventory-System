@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/config';
 import { ShoppingCart, Search, Trash2, Printer } from 'lucide-react';
 
 const POS = () => {
@@ -13,8 +13,8 @@ const POS = () => {
     const [receipt, setReceipt] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/products').then(res => setProducts(res.data));
-        axios.get('http://localhost:5000/api/customers').then(res => setCustomers(res.data));
+        api.get('/api/products').then(res => setProducts(res.data));
+        api.get('/api/customers').then(res => setCustomers(res.data));
     }, []);
 
     const filteredProducts = products.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -45,7 +45,7 @@ const POS = () => {
             customer_id: customerId
         };
 
-        axios.post('http://localhost:5000/api/sales', saleData)
+        api.post('/api/sales', saleData)
             .then(res => {
                 setReceipt({ ...res.data, cart, timestamp: new Date().toLocaleString() });
                 setCart([]);

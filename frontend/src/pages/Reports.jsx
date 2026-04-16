@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/config';
 import { Bar } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -25,8 +25,8 @@ const Reports = () => {
     const [inventory, setInventory] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/reports/dashboard').then(res => setData(res.data));
-        axios.get('http://localhost:5000/api/products').then(res => setInventory(res.data));
+        api.get('/api/reports/dashboard').then(res => setData(res.data));
+        api.get('/api/products').then(res => setInventory(res.data));
     }, []);
 
     if (!data) return <p>Loading Analytics...</p>;

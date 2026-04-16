@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api/config';
 import { UserPlus, Wallet, AlertCircle } from 'lucide-react';
 
 const Customers = () => {
@@ -10,7 +10,7 @@ const Customers = () => {
     const [repayAmount, setRepayAmount] = useState(0);
 
     const fetchCustomers = () => {
-        axios.get('http://localhost:5000/api/customers').then(res => setCustomers(res.data));
+        api.get('/api/customers').then(res => setCustomers(res.data));
     };
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const Customers = () => {
 
     const handleRegister = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:5000/api/customers', formData).then(() => {
+        api.post('/api/customers', formData).then(() => {
             setShowRegister(false);
             fetchCustomers();
         });
@@ -27,7 +27,7 @@ const Customers = () => {
 
     const handleRepayment = (e) => {
         e.preventDefault();
-        axios.post(`http://localhost:5000/api/customers/${showRepay.id}/repay`, { amount: parseFloat(repayAmount) })
+        api.post(`/api/customers/${showRepay.id}/repay`, { amount: parseFloat(repayAmount) })
             .then(() => {
                 setShowRepay(null);
                 fetchCustomers();
