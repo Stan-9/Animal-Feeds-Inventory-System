@@ -95,6 +95,7 @@ body {
   top: 0;
   z-index: 1001;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  width: 100%;
 }
 
 .mobile-header h2 {
@@ -147,17 +148,24 @@ body {
 }
 
 @media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
   .sidebar {
     transform: translateX(-100%);
-    z-index: 1000;
+    z-index: 1002;
     width: 250px;
-    padding: 1rem;
+    padding: 1.5rem 1rem;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    top: 0;
+    left: 0;
+    bottom: 0;
   }
 
   .sidebar h2 {
     font-size: 1.1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
   }
 
   .sidebar.open {
@@ -166,11 +174,14 @@ body {
 
   .sidebar-overlay {
     display: block;
+    z-index: 1001;
   }
 
   .main-content {
     margin-left: 0;
     padding: 1rem;
+    width: 100%;
+    flex: none;
   }
 
   .mobile-header {
