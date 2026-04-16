@@ -153,7 +153,7 @@ app.post('/api/sales', async (req, res) => {
         // 2. Insert Sale Record
         await client.query(
             "INSERT INTO sales (id, total_amount, payment_method, amount_paid, balance_due, customer_id) VALUES ($1, $2, $3, $4, $5, $6)",
-            [saleId, totalAmount, payment_method, amount_paid || 0, balanceDue, customer_id]
+            [saleId, totalAmount, payment_method, amount_paid || 0, balanceDue, customer_id || null]
         );
 
         // 3. Process Items and Update Stock
